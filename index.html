@@ -59,11 +59,24 @@ input,textarea{width:100%;padding:8px;margin-bottom:10px}
 
 <section id="contact">
 <h2>যোগাযোগ</h2>
-<form onsubmit="sendWhatsApp(event)">
-<input id="name" placeholder="নাম" required>
-<textarea id="message" placeholder="বার্তা" required></textarea>
-<button type="submit">WhatsApp এ পাঠান</button>
-</form>
+<form onsubmit="function sendWhatsApp(e){
+  e.preventDefault();
+
+  const phoneNumber = localStorage.getItem("whatsappNumber");
+
+  if(!phoneNumber){
+    alert("Admin এখনো WhatsApp নাম্বার সেট করেননি");
+    return;
+  }
+
+  const userName = document.getElementById("name").value;
+  const userMsg = document.getElementById("message").value;
+
+  const fullMessage = `নাম: ${userName}\nবার্তা: ${userMsg}`;
+  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(fullMessage)}`;
+
+  window.open(url, "_blank");
+}
 </section>
 
 </div>
@@ -83,6 +96,11 @@ input,textarea{width:100%;padding:8px;margin-bottom:10px}
 <textarea id="objectiveInput" placeholder="Objective"></textarea>
 <button onclick="saveSections()">Submit</button>
 
+ <hr>
+
+<h4>WhatsApp সেটিংস</h4>
+<input id="adminWhatsapp" placeholder="WhatsApp নাম্বার (8801XXXXXXXXX)">
+<button onclick="saveWhatsapp()">নাম্বার সেভ করুন</button>
 <hr>
 
 <h4>Gallery Upload</h4>
@@ -101,6 +119,24 @@ input,textarea{width:100%;padding:8px;margin-bottom:10px}
 </div>
 
 <script>
+ 
+function saveWhatsapp(){
+  const number = document.getElementById("adminWhatsapp").value.trim();
+
+  if(!number){
+    alert("WhatsApp নাম্বার দিন");
+    return;
+  }
+
+  if(!/^[0-9]{10,15}$/.test(number)){
+    alert("সঠিক ফরম্যাটে নাম্বার দিন (যেমন: 8801712345678)");
+    return;
+  }
+
+  localStorage.setItem("whatsappNumber", number);
+  alert("WhatsApp নাম্বার সেভ হয়েছে");
+ }
+ 
 const adminPass="admin123";
 
 /* Admin */
