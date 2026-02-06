@@ -1,123 +1,168 @@
-<!DOCTYPE html><html lang="bn">
+<!DOCTYPE html>
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>শহীদ ওসমান হাদী কালচারাল সোসাইটি</title>
-  <style>
-    body{
-      margin:0;
-      font-family: 'Segoe UI', sans-serif;
-      background:#f4f4f4;
-      color:#222;
-      line-height:1.7;
-    }
-    header{
-      background:linear-gradient(135deg,#8b0000,#c0392b);
-      color:#fff;
-      padding:40px 20px;
-      text-align:center;
-    }
-    header h1{margin:0;font-size:2.2rem;}
-    header p{margin-top:10px;font-size:1.1rem;}nav{
-  background:#222;
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-}
-nav a{
-  color:#fff;
-  padding:14px 18px;
-  text-decoration:none;
-  font-size:15px;
-}
-nav a:hover{background:#c0392b;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>শরীফ ওসমান হাদী কালচারাল সোসাইটি</title>
 
-.container{max-width:1100px;margin:auto;padding:20px;}
-section{background:#fff;margin-bottom:20px;padding:25px;border-radius:6px;}
-h2{color:#8b0000;margin-top:0;}
+<style>
+body{margin:0;font-family:Segoe UI,sans-serif;background:#f4f4f4}
+header{background:#8b0000;color:#fff;padding:35px;text-align:center}
+nav{background:#222;display:flex;flex-wrap:wrap;justify-content:center}
+nav a{color:#fff;padding:14px 18px;text-decoration:none}
+nav a:hover{background:#c0392b}
+.container{max-width:1100px;margin:auto;padding:20px}
+section{background:#fff;margin-bottom:20px;padding:25px;border-radius:6px}
+h2{color:#8b0000}
+footer{background:#222;color:#ccc;text-align:center;padding:20px}
 
-.event-box{
-  background:#fbe9e7;
-  border-left:6px solid #c0392b;
-  padding:20px;
-  margin-top:15px;
-}
+.event-box{background:#fbe9e7;border-left:6px solid #c0392b;padding:15px}
+button{background:#c0392b;color:#fff;border:none;padding:8px 15px;border-radius:4px;cursor:pointer}
+button:hover{background:#8b0000}
 
-.info-list li{margin-bottom:8px;}
+#galleryGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+#galleryGrid div{position:relative}
+#galleryGrid img{width:100%;border-radius:4px}
+.delBtn{position:absolute;top:5px;right:5px;background:#000;color:#fff;font-size:12px}
 
-footer{
-  background:#222;
-  color:#ccc;
-  text-align:center;
-  padding:20px;
-  font-size:14px;
-}
-
-button{
-  background:#c0392b;
-  color:#fff;
-  border:none;
-  padding:10px 18px;
-  border-radius:4px;
-  cursor:pointer;
-}
-button:hover{background:#8b0000;}
-
-  </style>
+#adminBtn{position:fixed;bottom:20px;right:20px;z-index:999}
+#adminPanel{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000cc;z-index:1000}
+#adminBox{background:#fff;padding:20px;max-width:600px;margin:40px auto}
+input,textarea{width:100%;padding:8px;margin-bottom:10px}
+</style>
 </head>
-<body><header>
-  <h1>শহীদ ওসমান হাদী কালচারাল সোসাইটি</h1>
-  <p>বদলগাছী, নওগাঁ</p>
-</header><nav>
-  <a href="#about">পরিচিতি</a>
-  <a href="#event">আয়োজন</a>
-  <a href="#objective">লক্ষ্য</a>
-  <a href="#contact">যোগাযোগ</a>
-</nav><div class="container"><section id="about">
-  <h2>আমাদের পরিচিতি</h2>
-  <p>
-    শরীফ ওসমান হাদী কালচারাল সোসাইটি একটি অরাজনৈতিক সামাজিক ও সাংস্কৃতিক সংগঠন।
-    সাহিত্য, সংস্কৃতি ও ইসলামী মূল্যবোধের আলোকে সুস্থ সাংস্কৃতিক চর্চা বিস্তারে কাজ করাই আমাদের মূল লক্ষ্য।
-  </p>
-</section><section id="event">
-  <h2>কাওয়ালী ও সাংস্কৃতিক সন্ধ্যা</h2>
-  <div class="event-box">
-    <ul class="info-list">
-      <li><strong>তারিখ:</strong> ০৭ ফেব্রুয়ারি ২০২৬</li>
-      <li><strong>দিন:</strong> শনিবার</li>
-      <li><strong>সময়:</strong> বাদ মাগরিব</li>
-      <li><strong>স্থান:</strong> বদলগাছী পাইলট হাইস্কুল মাঠ</li>
-      <li><strong>প্রধান আকর্ষণ:</strong> ব্যতিক্রমী সাহিত্য ও সাংস্কৃতিক জোট, ইসলামী বিশ্ববিদ্যালয়, কুষ্টিয়া</li>
-    </ul>
-    <button onclick="showMessage()">অংশগ্রহণের আগ্রহ জানান</button>
-  </div>
-</section><section id="gallery">
-  <h2>গ্যালারি</h2>
-  <div class="slider">
-    <img src="https://via.placeholder.com/900x400?text=Qawwali+Night+1" class="slide active">
-    <img src="https://via.placeholder.com/900x400?text=Qawwali+Night+2" class="slide">
-    <img src="https://via.placeholder.com/900x400?text=Cultural+Program" class="slide">
-  </div>
-</section><section id="objective">
-  <h2>লক্ষ্য ও উদ্দেশ্য</h2>
-  <ul class="info-list">
-    <li>সুস্থ ও রুচিশীল সাংস্কৃতিক চর্চা প্রসার</li>
-    <li>কাওয়ালী ও সাহিত্যভিত্তিক ঐতিহ্য সংরক্ষণ</li>
-    <li>তরুণ প্রজন্মকে নৈতিক ও সাংস্কৃতিক চেতনায় উদ্বুদ্ধ করা</li>
-    <li>স্থানীয় প্রতিভা বিকাশে ভূমিকা রাখা</li>
-  </ul>
-</section><section id="contact">
-  <h2>যোগাযোগ করুন</h2>
-  <form onsubmit="sendWhatsApp(event)">
-    <input type="text" id="name" placeholder="আপনার নাম" required style="width:100%;padding:10px;margin-bottom:10px;">
-    <textarea id="message" placeholder="আপনার বার্তা" required style="width:100%;padding:10px;height:100px;"></textarea>
-    <button type="submit">WhatsApp এ পাঠান</button>
-  </form>
-</section></div><footer>
-  © ২০২৬ শরীফ ওসমান হাদী কালচারাল সোসাইটি | বদলগাছী, নওগাঁ
-</footer><script>
-  function showMessage(){
-    alert('আপনার আগ্রহের জন্য ধন্যবাদ। শীঘ্রই যোগাযোগের তথ্য যুক্ত করা হবে।');
+
+<body>
+
+<header>
+<h1>শরীফ ওসমান হাদী কালচারাল সোসাইটি</h1>
+<p>বদলগাছী, নওগাঁ</p>
+</header>
+
+<nav id="menuBar">
+<a href="#about">পরিচিতি</a>
+<a href="#event">আয়োজন</a>
+<a href="#gallery">গ্যালারি</a>
+</nav>
+
+<div class="container" id="contentArea">
+
+<section id="about">
+<h2>আমাদের পরিচিতি</h2>
+<p>সাহিত্য, সংস্কৃতি ও ইসলামী মূল্যবোধের আলোকে সুস্থ সাংস্কৃতিক চর্চা বিস্তারে আমাদের কার্যক্রম পরিচালিত হয়।</p>
+</section>
+
+<section id="event">
+<h2>কাওয়ালী ও সাংস্কৃতিক সন্ধ্যা</h2>
+<div class="event-box">
+<ul>
+<li>📅 ০৭ ফেব্রুয়ারি ২০২৬ (শনিবার)</li>
+<li>🕰️ বাদ মাগরিব</li>
+<li>📍 বদলগাছী পাইলট হাইস্কুল মাঠ</li>
+</ul>
+</div>
+</section>
+
+<section id="gallery">
+<h2>গ্যালারি</h2>
+<div id="galleryGrid"></div>
+</section>
+
+</div>
+
+<footer>
+© ২০২৬ শরীফ ওসমান হাদী কালচারাল সোসাইটি
+</footer>
+
+<!-- Admin Button -->
+<div id="adminBtn">
+<button onclick="openAdmin()">Admin</button>
+</div>
+
+<!-- Admin Panel -->
+<div id="adminPanel">
+<div id="adminBox">
+<h3>এডমিন প্যানেল</h3>
+
+<h4>গ্যালারি ইমেজ আপলোড</h4>
+<input type="file" multiple accept="image/*" onchange="uploadImage(event)">
+
+<hr>
+
+<h4>নতুন মেনু তৈরি</h4>
+<input id="menuName" placeholder="মেনু নাম">
+<textarea id="menuContent" placeholder="মেনু কনটেন্ট"></textarea>
+<button onclick="saveMenu()">সেভ মেনু</button>
+
+<hr>
+<button onclick="closeAdmin()">বন্ধ করুন</button>
+</div>
+</div>
+
+<script>
+const adminPass="admin123";
+
+/* Admin */
+function openAdmin(){
+ const p=prompt("এডমিন পাসওয়ার্ড দিন");
+ if(p===adminPass) adminPanel.style.display="block";
+ else alert("ভুল পাসওয়ার্ড");
+}
+function closeAdmin(){adminPanel.style.display="none";}
+
+/* Gallery */
+function uploadImage(e){
+ let imgs=JSON.parse(localStorage.getItem("gallery")||"[]");
+ [...e.target.files].forEach(f=>{
+  let r=new FileReader();
+  r.onload=()=>{imgs.push(r.result);localStorage.setItem("gallery",JSON.stringify(imgs));renderGallery();}
+  r.readAsDataURL(f);
+ });
+}
+function renderGallery(){
+ galleryGrid.innerHTML="";
+ let imgs=JSON.parse(localStorage.getItem("gallery")||"[]");
+ imgs.forEach((src,i)=>{
+  let d=document.createElement("div");
+  d.innerHTML=`<img src="${src}"><button class="delBtn" onclick="delImg(${i})">X</button>`;
+  galleryGrid.appendChild(d);
+ });
+}
+function delImg(i){
+ let imgs=JSON.parse(localStorage.getItem("gallery"));
+ imgs.splice(i,1);
+ localStorage.setItem("gallery",JSON.stringify(imgs));
+ renderGallery();
+}
+
+/* Menu CRUD */
+function saveMenu(){
+ let name=menuName.value,content=menuContent.value;
+ if(!name||!content) return alert("সব ঘর পূরণ করুন");
+ let menus=JSON.parse(localStorage.getItem("menus")||"[]");
+ menus.push({name,content});
+ localStorage.setItem("menus",JSON.stringify(menus));
+ menuName.value="";menuContent.value="";
+ renderMenus();
+}
+function renderMenus(){
+ let menus=JSON.parse(localStorage.getItem("menus")||"[]");
+ menus.forEach((m,i)=>{
+  if(!document.getElementById("menu"+i)){
+   let a=document.createElement("a");
+   a.href="#menu"+i;a.innerText=m.name;
+   menuBar.appendChild(a);
+
+   let s=document.createElement("section");
+   s.id="menu"+i;
+   s.innerHTML=`<h2>${m.name}</h2><p>${m.content}</p>`;
+   contentArea.appendChild(s);
   }
-</script></body>
-  </html>
+ });
+}
+
+window.onload=()=>{renderGallery();renderMenus();}
+</script>
+
+</body>
+</html>
