@@ -4,32 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>শহীদ শরীফ ওসমান হাদী কালচারাল সোসাইটি</title>
-
 <style>
-body{margin:0;font-family:Segoe UI,sans-serif;background:#f4f4f4}
+body{margin:0;font-family:Segoe UI,sans-serif;background:#f4f4f4;color:#222;line-height:1.7}
 header{background:linear-gradient(135deg,#8b0000,#c0392b);color:#fff;padding:40px;text-align:center}
+header h1{margin:0;font-size:2.2rem}
+header p{margin-top:10px;font-size:1.1rem}
 nav{background:#222;display:flex;flex-wrap:wrap;justify-content:center}
-nav a{color:#fff;padding:14px 18px;text-decoration:none}
+nav a{color:#fff;padding:14px 18px;text-decoration:none;font-size:15px}
 nav a:hover{background:#c0392b}
 .container{max-width:1100px;margin:auto;padding:20px}
 section{background:#fff;margin-bottom:20px;padding:25px;border-radius:6px}
-h2{color:#8b0000}
-footer{background:#222;color:#ccc;text-align:center;padding:20px}
-button{background:#c0392b;color:#fff;border:none;padding:8px 15px;border-radius:4px;cursor:pointer}
+h2{color:#8b0000;margin-top:0}
+.event-box{background:#fbe9e7;border-left:6px solid #c0392b;padding:20px;margin-top:15px}
+.info-list li{margin-bottom:8px}
+footer{background:#222;color:#ccc;text-align:center;padding:20px;font-size:14px}
+button{background:#c0392b;color:#fff;border:none;padding:10px 18px;border-radius:4px;cursor:pointer}
 button:hover{background:#8b0000}
 
+/* Admin Panel */
 #adminBtn{position:fixed;bottom:20px;right:20px;z-index:999}
 #adminPanel{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000cc;z-index:1000}
-#adminBox{background:#fff;padding:20px;max-width:650px;margin:40px auto}
+#adminBox{background:#fff;padding:20px;max-width:700px;margin:40px auto;overflow-y:auto;max-height:90vh}
 input,textarea{width:100%;padding:8px;margin-bottom:10px}
 
-#galleryGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
-#galleryGrid div{position:relative}
-#galleryGrid img{width:100%}
-.delBtn{position:absolute;top:5px;right:5px;background:#000;color:#fff;font-size:12px}
+/* Gallery Slider */
+#gallerySlider{position:relative;width:100%;max-width:900px;height:400px;margin:auto;overflow:hidden;border-radius:6px}
+#gallerySlider img{position:absolute;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s ease-in-out}
+#gallerySlider img.active{opacity:1;z-index:1}
 </style>
 </head>
-
 <body>
 
 <header>
@@ -52,40 +55,19 @@ input,textarea{width:100%;padding:8px;margin-bottom:10px}
 
 <section id="gallery">
 <h2>গ্যালারি</h2>
-<div id="galleryGrid"></div>
+<div id="gallerySlider"></div>
 </section>
 
 <section id="objective"><h2>লক্ষ্য ও উদ্দেশ্য</h2><p id="objectiveText"></p></section>
 
 <section id="contact">
-  <h2>যোগাযোগ</h2>
-  <form id="contactForm">
-    <input type="text" id="name" placeholder="আপনার নাম" required />
-    <textarea id="message" placeholder="আপনার বার্তা" required></textarea>
-    <button type="submit">Send via WhatsApp</button>
-  </form>
+<h2>যোগাযোগ</h2>
+<form onsubmit="sendWhatsApp(event)">
+<input id="name" placeholder="নাম" required>
+<textarea id="message" placeholder="বার্তা" required></textarea>
+<button type="submit">WhatsApp এ পাঠান</button>
+</form>
 </section>
-
-<script>
-  document.getElementById("contactForm").addEventListener("submit", function(e) {
-    e.preventDefault(); // ফর্ম সাবমিট বন্ধ
-
-    const phoneNumber = localStorage.getItem("whatsappNumber");
-
-    if(!phoneNumber){
-      alert("Admin এখনো WhatsApp নাম্বার সেট করেননি");
-      return;
-    }
-
-    const userName = document.getElementById("name").value;
-    const userMsg = document.getElementById("message").value;
-
-    const fullMessage = `নাম: ${userName}\nবার্তা: ${userMsg}`;
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(fullMessage)}`;
-
-    window.open(url, "_blank");
-  });
-</script>
 
 </div>
 
@@ -93,33 +75,33 @@ input,textarea{width:100%;padding:8px;margin-bottom:10px}
 
 <!-- Admin -->
 <div id="adminBtn"><button onclick="openAdmin()">Admin</button></div>
-
 <div id="adminPanel">
 <div id="adminBox">
 <h3>এডমিন প্যানেল</h3>
 
-<h4>Section Content Update</h4>
-<textarea id="aboutInput" placeholder="About"></textarea>
-<textarea id="eventInput" placeholder="Event"></textarea>
-<textarea id="objectiveInput" placeholder="Objective"></textarea>
+<h4>Section Update</h4>
+<label>About:</label>
+<textarea id="aboutInput" placeholder="About Section Content"></textarea>
+<label>Event:</label>
+<textarea id="eventInput" placeholder="Event Section Content"></textarea>
+<label>Objective:</label>
+<textarea id="objectiveInput" placeholder="Objective Section Content"></textarea>
 <button onclick="saveSections()">Submit</button>
 
- <hr>
-
-<h4>WhatsApp সেটিংস</h4>
-<input id="adminWhatsapp" placeholder="WhatsApp নাম্বার (8801XXXXXXXXX)">
-<button onclick="saveWhatsapp()">নাম্বার সেভ করুন</button>
 <hr>
-
 <h4>Gallery Upload</h4>
 <input type="file" multiple accept="image/*" onchange="uploadImage(event)">
 
 <hr>
-
 <h4>নতুন মেনু তৈরি</h4>
 <input id="menuName" placeholder="Menu Name">
 <textarea id="menuContent" placeholder="Menu Content"></textarea>
 <button onclick="saveMenu()">Submit</button>
+
+<hr>
+<h4>WhatsApp সেটিংস</h4>
+<input id="adminWhatsapp" placeholder="WhatsApp নাম্বার (8801XXXXXXXXX)">
+<button onclick="saveWhatsapp()">নাম্বার সেভ করুন</button>
 
 <hr>
 <button onclick="closeAdmin()">বন্ধ করুন</button>
@@ -127,34 +109,16 @@ input,textarea{width:100%;padding:8px;margin-bottom:10px}
 </div>
 
 <script>
- 
-function saveWhatsapp(){
-  const number = document.getElementById("adminWhatsapp").value.trim();
-
-  if(!number){
-    alert("WhatsApp নাম্বার দিন");
-    return;
-  }
-
-  if(!/^[0-9]{10,15}$/.test(number)){
-    alert("সঠিক ফরম্যাটে নাম্বার দিন (যেমন: 8801712345678)");
-    return;
-  }
-
-  localStorage.setItem("whatsappNumber", number);
-  alert("WhatsApp নাম্বার সেভ হয়েছে");
- }
- 
 const adminPass="admin123";
 
-/* Admin */
+/* Admin Login */
 function openAdmin(){
  if(prompt("পাসওয়ার্ড")===adminPass) adminPanel.style.display="block";
  else alert("ভুল পাসওয়ার্ড");
 }
 function closeAdmin(){adminPanel.style.display="none";}
 
-/* Section Save */
+/* Section CRUD */
 function saveSections(){
  localStorage.setItem("about",aboutInput.value);
  localStorage.setItem("event",eventInput.value);
@@ -163,60 +127,99 @@ function saveSections(){
  alert("আপডেট সম্পন্ন");
 }
 function loadSections(){
- aboutText.innerText=localStorage.getItem("about")||"";
- eventText.innerText=localStorage.getItem("event")||"";
- objectiveText.innerText=localStorage.getItem("objective")||"";
+ aboutText.innerText = localStorage.getItem("about") || 
+ "শরীফ ওসমান হাদী কালচারাল সোসাইটি একটি অরাজনৈতিক সামাজিক ও সাংস্কৃতিক সংগঠন।\nসাহিত্য, সংস্কৃতি ও ইসলামী মূল্যবোধের আলোকে সুস্থ সাংস্কৃতিক চর্চা বিস্তারে কাজ করাই আমাদের মূল লক্ষ্য।";
+ eventText.innerText = localStorage.getItem("event") ||
+ "কাওয়ালী ও সাংস্কৃতিক সন্ধ্যা আয়োজন করা হয়েছে।\nতারিখ: ০৭ ফেব্রুয়ারি ২০২৬, শনিবার\nসময়: বাদ মাগরিব\nস্থান: বদলগাছী পাইলট হাইস্কুল মাঠ\nপ্রধান আকর্ষণ: ব্যতিক্রমী সাহিত্য ও সাংস্কৃতিক জোট, ইসলামী বিশ্ববিদ্যালয়, কুষ্টিয়া।";
+ objectiveText.innerText = localStorage.getItem("objective") ||
+ "সুস্থ ও রুচিশীল সাংস্কৃতিক চর্চা প্রসার\nকাওয়ালী ও সাহিত্যভিত্তিক ঐতিহ্য সংরক্ষণ\nতরুণ প্রজন্মকে নৈতিক ও সাংস্কৃতিক চেতনায় উদ্বুদ্ধ করা\nস্থানীয় প্রতিভা বিকাশে ভূমিকা রাখা।";
+
+ // Update admin textarea with current values
+ aboutInput.value = localStorage.getItem("about") || aboutText.innerText;
+ eventInput.value = localStorage.getItem("event") || eventText.innerText;
+ objectiveInput.value = localStorage.getItem("objective") || objectiveText.innerText;
 }
 
-/* Gallery */
+/* Gallery CRUD + Slideshow */
 function uploadImage(e){
- let imgs=JSON.parse(localStorage.getItem("gallery")||"[]");
- [...e.target.files].forEach(f=>{
-  let r=new FileReader();
-  r.onload=()=>{imgs.push(r.result);localStorage.setItem("gallery",JSON.stringify(imgs));renderGallery();}
-  r.readAsDataURL(f);
+ let files=[...e.target.files];
+ let imgs = JSON.parse(localStorage.getItem("gallery")||"[]");
+ files.forEach(f=>{
+  let reader = new FileReader();
+  reader.onload=()=>{imgs.push(reader.result); localStorage.setItem("gallery",JSON.stringify(imgs)); renderGallerySlider();}
+  reader.readAsDataURL(f);
  });
-}
-function renderGallery(){
- galleryGrid.innerHTML="";
- let imgs=JSON.parse(localStorage.getItem("gallery")||"[]");
- imgs.forEach((src,i)=>{
-  let d=document.createElement("div");
-  d.innerHTML=`<img src="${src}"><button class="delBtn" onclick="delImg(${i})">X</button>`;
-  galleryGrid.appendChild(d);
- });
-}
-function delImg(i){
- let imgs=JSON.parse(localStorage.getItem("gallery"));
- imgs.splice(i,1);localStorage.setItem("gallery",JSON.stringify(imgs));
- renderGallery();
 }
 
-/* Menu */
+function renderGallerySlider(){
+ const slider=document.getElementById("gallerySlider");
+ slider.innerHTML="";
+ const imgs=JSON.parse(localStorage.getItem("gallery")||"[]");
+ imgs.forEach((src,i)=>{
+   const img=document.createElement("img");
+   img.src=src;
+   if(i===0) img.classList.add("active");
+   slider.appendChild(img);
+ });
+ startSlider();
+}
+
+let slideIndex=0, slideInterval;
+function startSlider(){
+ clearInterval(slideInterval);
+ const slides=document.querySelectorAll("#gallerySlider img");
+ if(slides.length<2) return;
+ slideInterval=setInterval(()=>{
+   slides[slideIndex].classList.remove("active");
+   slideIndex=(slideIndex+1)%slides.length;
+   slides[slideIndex].classList.add("active");
+ },3000);
+}
+
+/* Menu CRUD */
 function saveMenu(){
- let menus=JSON.parse(localStorage.getItem("menus")||"[]");
+ const menus=JSON.parse(localStorage.getItem("menus")||"[]");
  menus.push({name:menuName.value,content:menuContent.value});
  localStorage.setItem("menus",JSON.stringify(menus));
  renderMenus();
+ menuName.value=""; menuContent.value="";
 }
 function renderMenus(){
- let menus=JSON.parse(localStorage.getItem("menus")||"[]");
+ const menus=JSON.parse(localStorage.getItem("menus")||"[]");
  menus.forEach((m,i)=>{
-  if(!document.getElementById("menu"+i)){
-   let a=document.createElement("a");a.href="#menu"+i;a.innerText=m.name;menuBar.appendChild(a);
-   let s=document.createElement("section");s.id="menu"+i;s.innerHTML=`<h2>${m.name}</h2><p>${m.content}</p>`;
-   contentArea.appendChild(s);
-  }
+   if(!document.getElementById("menu"+i)){
+     const a=document.createElement("a"); a.href="#menu"+i; a.innerText=m.name; menuBar.appendChild(a);
+     const s=document.createElement("section"); s.id="menu"+i; s.innerHTML=`<h2>${m.name}</h2><p>${m.content}</p>`;
+     contentArea.appendChild(s);
+   }
  });
 }
 
-function sendWhatsApp(e){
- e.preventDefault();
- window.open(`https://wa.me/?text=${name.value}: ${message.value}`);
+/* WhatsApp Admin */
+function saveWhatsapp(){
+ const number=adminWhatsapp.value.trim();
+ if(!number){alert("WhatsApp নাম্বার দিন");return;}
+ if(!/^[0-9]{10,15}$/.test(number)){alert("সঠিক ফরম্যাট দিন");return;}
+ localStorage.setItem("whatsappNumber",number);
+ alert("WhatsApp নাম্বার সেভ হয়েছে");
 }
 
-window.onload=()=>{loadSections();renderGallery();renderMenus();}
-</script>
+/* Visitor WhatsApp */
+function sendWhatsApp(e){
+ e.preventDefault();
+ const phone=localStorage.getItem("whatsappNumber");
+ if(!phone){alert("Admin এখনো WhatsApp নাম্বার সেট করেননি"); return;}
+ const fullMessage=`নাম: ${name.value}\nবার্তা: ${message.value}`;
+ window.open(`https://wa.me/${phone}?text=${encodeURIComponent(fullMessage)}`,"_blank");
+}
 
+/* Initialize */
+window.onload=()=>{
+ loadSections();
+ renderGallerySlider();
+ renderMenus();
+ if(localStorage.getItem("whatsappNumber")) adminWhatsapp.value=localStorage.getItem("whatsappNumber");
+}
+</script>
 </body>
 </html>
