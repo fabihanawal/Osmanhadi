@@ -58,27 +58,34 @@ input,textarea{width:100%;padding:8px;margin-bottom:10px}
 <section id="objective"><h2>লক্ষ্য ও উদ্দেশ্য</h2><p id="objectiveText"></p></section>
 
 <section id="contact">
-<h2>যোগাযোগ</h2>
-<form onsubmit="function sendWhatsApp(e){
-  e.preventDefault();
-
-  const phoneNumber = localStorage.getItem("whatsappNumber");
-
-  if(!phoneNumber){
-    alert("Admin এখনো WhatsApp নাম্বার সেট করেননি");
-    return;
-  }
-
-  const userName = document.getElementById("name").value;
-  const userMsg = document.getElementById("message").value;
-
-  const fullMessage = `নাম: ${userName}\nবার্তা: ${userMsg}`;
-  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(fullMessage)}`;
-
-  window.open(url, "_blank");
-}
-</form>
+  <h2>যোগাযোগ</h2>
+  <form id="contactForm">
+    <input type="text" id="name" placeholder="আপনার নাম" required />
+    <textarea id="message" placeholder="আপনার বার্তা" required></textarea>
+    <button type="submit">Send via WhatsApp</button>
+  </form>
 </section>
+
+<script>
+  document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // ফর্ম সাবমিট বন্ধ
+
+    const phoneNumber = localStorage.getItem("whatsappNumber");
+
+    if(!phoneNumber){
+      alert("Admin এখনো WhatsApp নাম্বার সেট করেননি");
+      return;
+    }
+
+    const userName = document.getElementById("name").value;
+    const userMsg = document.getElementById("message").value;
+
+    const fullMessage = `নাম: ${userName}\nবার্তা: ${userMsg}`;
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(fullMessage)}`;
+
+    window.open(url, "_blank");
+  });
+</script>
 
 </div>
 
