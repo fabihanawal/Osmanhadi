@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>শরীফ ওসমান হাদী কালচারাল সোসাইটি</title>
+<title>শহীদ শরীফ ওসমান হাদী কালচারাল সোসাইটি</title>
 
 <style>
 body{margin:0;font-family:Segoe UI,sans-serif;background:#f4f4f4}
-header{background:#8b0000;color:#fff;padding:35px;text-align:center}
+header{background:linear-gradient(135deg,#8b0000,#c0392b);color:#fff;padding:40px;text-align:center}
 nav{background:#222;display:flex;flex-wrap:wrap;justify-content:center}
 nav a{color:#fff;padding:14px 18px;text-decoration:none}
 nav a:hover{background:#c0392b}
@@ -15,20 +15,18 @@ nav a:hover{background:#c0392b}
 section{background:#fff;margin-bottom:20px;padding:25px;border-radius:6px}
 h2{color:#8b0000}
 footer{background:#222;color:#ccc;text-align:center;padding:20px}
-
-.event-box{background:#fbe9e7;border-left:6px solid #c0392b;padding:15px}
 button{background:#c0392b;color:#fff;border:none;padding:8px 15px;border-radius:4px;cursor:pointer}
 button:hover{background:#8b0000}
 
-#galleryGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
-#galleryGrid div{position:relative}
-#galleryGrid img{width:100%;border-radius:4px}
-.delBtn{position:absolute;top:5px;right:5px;background:#000;color:#fff;font-size:12px}
-
 #adminBtn{position:fixed;bottom:20px;right:20px;z-index:999}
 #adminPanel{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000cc;z-index:1000}
-#adminBox{background:#fff;padding:20px;max-width:600px;margin:40px auto}
+#adminBox{background:#fff;padding:20px;max-width:650px;margin:40px auto}
 input,textarea{width:100%;padding:8px;margin-bottom:10px}
+
+#galleryGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+#galleryGrid div{position:relative}
+#galleryGrid img{width:100%}
+.delBtn{position:absolute;top:5px;right:5px;background:#000;color:#fff;font-size:12px}
 </style>
 </head>
 
@@ -43,56 +41,59 @@ input,textarea{width:100%;padding:8px;margin-bottom:10px}
 <a href="#about">পরিচিতি</a>
 <a href="#event">আয়োজন</a>
 <a href="#gallery">গ্যালারি</a>
+<a href="#objective">লক্ষ্য</a>
+<a href="#contact">যোগাযোগ</a>
 </nav>
 
 <div class="container" id="contentArea">
 
-<section id="about">
-<h2>আমাদের পরিচিতি</h2>
-<p>সাহিত্য, সংস্কৃতি ও ইসলামী মূল্যবোধের আলোকে সুস্থ সাংস্কৃতিক চর্চা বিস্তারে আমাদের কার্যক্রম পরিচালিত হয়।</p>
-</section>
-
-<section id="event">
-<h2>কাওয়ালী ও সাংস্কৃতিক সন্ধ্যা</h2>
-<div class="event-box">
-<ul>
-<li>📅 ০৭ ফেব্রুয়ারি ২০২৬ (শনিবার)</li>
-<li>🕰️ বাদ মাগরিব</li>
-<li>📍 বদলগাছী পাইলট হাইস্কুল মাঠ</li>
-</ul>
-</div>
-</section>
+<section id="about"><h2>আমাদের পরিচিতি</h2><p id="aboutText"></p></section>
+<section id="event"><h2>আয়োজন</h2><p id="eventText"></p></section>
 
 <section id="gallery">
 <h2>গ্যালারি</h2>
 <div id="galleryGrid"></div>
 </section>
 
+<section id="objective"><h2>লক্ষ্য ও উদ্দেশ্য</h2><p id="objectiveText"></p></section>
+
+<section id="contact">
+<h2>যোগাযোগ</h2>
+<form onsubmit="sendWhatsApp(event)">
+<input id="name" placeholder="নাম" required>
+<textarea id="message" placeholder="বার্তা" required></textarea>
+<button type="submit">WhatsApp এ পাঠান</button>
+</form>
+</section>
+
 </div>
 
-<footer>
-© ২০২৬ শরীফ ওসমান হাদী কালচারাল সোসাইটি
-</footer>
+<footer>© ২০২৬ শরীফ ওসমান হাদী কালচারাল সোসাইটি</footer>
 
-<!-- Admin Button -->
-<div id="adminBtn">
-<button onclick="openAdmin()">Admin</button>
-</div>
+<!-- Admin -->
+<div id="adminBtn"><button onclick="openAdmin()">Admin</button></div>
 
-<!-- Admin Panel -->
 <div id="adminPanel">
 <div id="adminBox">
 <h3>এডমিন প্যানেল</h3>
 
-<h4>গ্যালারি ইমেজ আপলোড</h4>
+<h4>Section Content Update</h4>
+<textarea id="aboutInput" placeholder="About"></textarea>
+<textarea id="eventInput" placeholder="Event"></textarea>
+<textarea id="objectiveInput" placeholder="Objective"></textarea>
+<button onclick="saveSections()">Submit</button>
+
+<hr>
+
+<h4>Gallery Upload</h4>
 <input type="file" multiple accept="image/*" onchange="uploadImage(event)">
 
 <hr>
 
 <h4>নতুন মেনু তৈরি</h4>
-<input id="menuName" placeholder="মেনু নাম">
-<textarea id="menuContent" placeholder="মেনু কনটেন্ট"></textarea>
-<button onclick="saveMenu()">সেভ মেনু</button>
+<input id="menuName" placeholder="Menu Name">
+<textarea id="menuContent" placeholder="Menu Content"></textarea>
+<button onclick="saveMenu()">Submit</button>
 
 <hr>
 <button onclick="closeAdmin()">বন্ধ করুন</button>
@@ -104,11 +105,24 @@ const adminPass="admin123";
 
 /* Admin */
 function openAdmin(){
- const p=prompt("এডমিন পাসওয়ার্ড দিন");
- if(p===adminPass) adminPanel.style.display="block";
+ if(prompt("পাসওয়ার্ড")===adminPass) adminPanel.style.display="block";
  else alert("ভুল পাসওয়ার্ড");
 }
 function closeAdmin(){adminPanel.style.display="none";}
+
+/* Section Save */
+function saveSections(){
+ localStorage.setItem("about",aboutInput.value);
+ localStorage.setItem("event",eventInput.value);
+ localStorage.setItem("objective",objectiveInput.value);
+ loadSections();
+ alert("আপডেট সম্পন্ন");
+}
+function loadSections(){
+ aboutText.innerText=localStorage.getItem("about")||"";
+ eventText.innerText=localStorage.getItem("event")||"";
+ objectiveText.innerText=localStorage.getItem("objective")||"";
+}
 
 /* Gallery */
 function uploadImage(e){
@@ -130,38 +144,34 @@ function renderGallery(){
 }
 function delImg(i){
  let imgs=JSON.parse(localStorage.getItem("gallery"));
- imgs.splice(i,1);
- localStorage.setItem("gallery",JSON.stringify(imgs));
+ imgs.splice(i,1);localStorage.setItem("gallery",JSON.stringify(imgs));
  renderGallery();
 }
 
-/* Menu CRUD */
+/* Menu */
 function saveMenu(){
- let name=menuName.value,content=menuContent.value;
- if(!name||!content) return alert("সব ঘর পূরণ করুন");
  let menus=JSON.parse(localStorage.getItem("menus")||"[]");
- menus.push({name,content});
+ menus.push({name:menuName.value,content:menuContent.value});
  localStorage.setItem("menus",JSON.stringify(menus));
- menuName.value="";menuContent.value="";
  renderMenus();
 }
 function renderMenus(){
  let menus=JSON.parse(localStorage.getItem("menus")||"[]");
  menus.forEach((m,i)=>{
   if(!document.getElementById("menu"+i)){
-   let a=document.createElement("a");
-   a.href="#menu"+i;a.innerText=m.name;
-   menuBar.appendChild(a);
-
-   let s=document.createElement("section");
-   s.id="menu"+i;
-   s.innerHTML=`<h2>${m.name}</h2><p>${m.content}</p>`;
+   let a=document.createElement("a");a.href="#menu"+i;a.innerText=m.name;menuBar.appendChild(a);
+   let s=document.createElement("section");s.id="menu"+i;s.innerHTML=`<h2>${m.name}</h2><p>${m.content}</p>`;
    contentArea.appendChild(s);
   }
  });
 }
 
-window.onload=()=>{renderGallery();renderMenus();}
+function sendWhatsApp(e){
+ e.preventDefault();
+ window.open(`https://wa.me/?text=${name.value}: ${message.value}`);
+}
+
+window.onload=()=>{loadSections();renderGallery();renderMenus();}
 </script>
 
 </body>
